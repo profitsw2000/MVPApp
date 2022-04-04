@@ -5,4 +5,5 @@
     <string name="forgot_password_text"><u>Забыли пароль?</u></string>
     <string name="sign_in_text">Войти</string>
     <string name="sign_up_text"><u>Зарегистрироваться</u></string>
+    <string name="login_successful_text">Вход выполнен!</string>
 </resources>

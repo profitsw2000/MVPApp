@@ -21,7 +21,7 @@ class LoginContract {
     }
 
     interface Model {
-        fun getCredentials(): Boolean
-        fun getAccount(): String
+        fun getCredentials(appAccount: AppAccount): Boolean
+        fun getAccount(): AppAccount
     }
 }
