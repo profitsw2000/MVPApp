@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">MVPApp</string>
+    <string name="login_hint_text">Логин</string>
+    <string name="password_hint_text">Пароль</string>
+    <string name="forgot_password_text"><u>Забыли пароль?</u></string>
+    <string name="sign_in_text">Войти</string>
+    <string name="sign_up_text"><u>Зарегистрироваться</u></string>
 </resources>
