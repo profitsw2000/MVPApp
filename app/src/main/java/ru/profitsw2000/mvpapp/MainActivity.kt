@@ -1,12 +1,12 @@
 package ru.profitsw2000.mvpapp
 
 import android.app.Activity
-import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import ru.profitsw2000.mvpapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), LoginContract.View {
@@ -36,12 +36,10 @@ class MainActivity : AppCompatActivity(), LoginContract.View {
         return presenter
     }
 
-    override fun setSuccess() {
-        with(binding) {
-            mainGroup.visibility = View.GONE
-            tvLoginSuccesful.visibility = View.VISIBLE
-            root.setBackgroundColor(Color.GREEN)
-        }
+    override fun setSignInSuccess() {
+        val intent = Intent(this, AccountActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     override fun setError(error: String) {

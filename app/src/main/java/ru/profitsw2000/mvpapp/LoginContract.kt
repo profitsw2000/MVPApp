@@ -6,7 +6,7 @@ class LoginContract {
 
     interface View {
         @MainThread
-        fun setSuccess()
+        fun setSignInSuccess()
         @MainThread
         fun setError(error: String)
         @MainThread
@@ -18,10 +18,5 @@ class LoginContract {
     interface Presenter {
         fun onAttach(view: View)
         fun onLogin(login: String, password: String)
-    }
-
-    interface Model {
-        fun getCredentials(appAccount: AppAccount): Boolean
-        fun getAccount(): AppAccount
     }
 }
