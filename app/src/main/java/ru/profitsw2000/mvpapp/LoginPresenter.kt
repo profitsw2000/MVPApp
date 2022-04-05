@@ -13,7 +13,7 @@ class LoginPresenter: LoginContract.Presenter {
     override fun onAttach(view: LoginContract.View) {
         this.view = view
         if (isSuccess) {
-            view.setSuccess()
+            view.setSignInSuccess()
         } else {
             view.setError(errorText)
         }
@@ -27,7 +27,7 @@ class LoginPresenter: LoginContract.Presenter {
             uiHandler.post {
                 view?.hideProgress()
                 if (login.contentEquals("admin") && password.contentEquals("1234")) {
-                    view?.setSuccess()
+                    view?.setSignInSuccess()
                     isSuccess = true
                     errorText = ""
                 } else {
