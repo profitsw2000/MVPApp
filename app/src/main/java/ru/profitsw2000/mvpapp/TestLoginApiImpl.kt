@@ -2,10 +2,9 @@ package ru.profitsw2000.mvpapp
 
 class TestLoginApiImpl : LoginApi {
 
-    val users: MutableList<UserProfile> = mutableListOf(UserProfile("admin","1234"))
+    val users: MutableList<UserProfile> = mutableListOf(UserProfile("admin","1234"), UserProfile("user","0000"))
 
     override fun login(login: String, password: String): Boolean {
-        Thread.sleep(3_000)
         for(user in users){
             if(login.equals(user.login,true) && password.equals(user.password,true))
                 return true
@@ -24,8 +23,11 @@ class TestLoginApiImpl : LoginApi {
         return true
     }
 
-    override fun forgotPassword(login: String): Boolean {
-        Thread.sleep(1_000)
+    override fun restorePassword(login: String): Boolean {
+        for(user in users){
+            if(login.equals(user.login,true))
+                return true
+        }
         return false
     }
 }

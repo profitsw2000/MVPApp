@@ -1,11 +1,11 @@
 package ru.profitsw2000.mvpapp
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ru.profitsw2000.mvpapp.databinding.ActivityMainBinding
 
@@ -25,11 +25,15 @@ class MainActivity : AppCompatActivity(), LoginContract.View {
                 binding.loginEditText.text.toString(),
                 binding.passwordEditText.text.toString())
         }
+
+        binding.tvForgotPassword.setOnClickListener {
+            presenter?.onRestorePassword(binding.loginEditText.text.toString())
+        }
     }
 
     private fun restorePresenter(): LoginPresenter {
         val presenter = lastCustomNonConfigurationInstance as? LoginPresenter
-        return presenter ?: LoginPresenter()
+        return presenter ?: LoginPresenter(loginApi = TestLoginApiImpl())
     }
 
     override fun onRetainCustomNonConfigurationInstance(): Any? {
@@ -42,8 +46,16 @@ class MainActivity : AppCompatActivity(), LoginContract.View {
         finish()
     }
 
-    override fun setError(error: String) {
-        Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
+    override fun setRestorePasswordSuccess() {
+        this.showDialog("Восстановление пароля", "Пароль был выслан на электронный адрес.")
+    }
+
+    override fun setError(errorNumber: Int) {
+        when(errorNumber){
+            1 -> showDialog("Ошибка входа", "Неверный логин/пароль")
+            2 -> showDialog("Ошибка", "Пользователь не найден")
+            else -> {}
+        }
     }
 
     override fun showProgress() {
@@ -79,5 +91,17 @@ class MainActivity : AppCompatActivity(), LoginContract.View {
             view = View(activity)
         }
         imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    private fun showDialog(title: String, message: String) {
+        this?.let {
+            AlertDialog.Builder(it)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(getString(R.string.dialog_button_ok_text)){
+                        dialog, _ -> dialog.dismiss() }
+                .create()
+                .show()
+        }
     }
 }
