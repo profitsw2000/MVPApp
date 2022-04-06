@@ -7,10 +7,10 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
-import ru.profitsw2000.mvpapp.ui.AccountActivity
 import ru.profitsw2000.mvpapp.R
 import ru.profitsw2000.mvpapp.data.TestLoginApiImpl
 import ru.profitsw2000.mvpapp.databinding.ActivityMainBinding
+import ru.profitsw2000.mvpapp.ui.*
 
 class MainActivity : AppCompatActivity(), LoginContract.View {
     private lateinit var binding: ActivityMainBinding
@@ -65,10 +65,10 @@ class MainActivity : AppCompatActivity(), LoginContract.View {
 
     override fun setError(errorNumber: Int) {
         when(errorNumber){
-            1 -> showDialog(getString(R.string.dialog_sign_in_error_title), getString(R.string.dialog_sign_in_error_text))
-            2 -> showDialog(getString(R.string.dialog_restore_password_error_title), getString(R.string.dialog_restore_password_error_text))
-            3 -> showDialog(getString(R.string.dialog_registration_error_title), getString(R.string.dialog_registration_error_text))
-            4 -> showDialog(getString(R.string.dialog_empty_field_error_title), getString(R.string.dialog_empty_field_error_text))
+            ERROR_SIGN_IN -> showDialog(getString(R.string.dialog_sign_in_error_title), getString(R.string.dialog_sign_in_error_text))
+            ERROR_PASSWORD_RESTORE -> showDialog(getString(R.string.dialog_restore_password_error_title), getString(R.string.dialog_restore_password_error_text))
+            ERROR_SIGN_UP -> showDialog(getString(R.string.dialog_registration_error_title), getString(R.string.dialog_registration_error_text))
+            ERROR_EMPTY_FIELD -> showDialog(getString(R.string.dialog_empty_field_error_title), getString(R.string.dialog_empty_field_error_text))
             else -> {}
         }
     }
