@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/yellow_300"
-    tools:context=".AccountActivity">
+    tools:context=".ui.AccountActivity">
 
     <TextView
         android:id="@+id/tv_login_succesful"

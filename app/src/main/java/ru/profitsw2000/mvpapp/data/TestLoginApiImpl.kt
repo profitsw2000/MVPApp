@@ -1,4 +1,7 @@
-package ru.profitsw2000.mvpapp
+package ru.profitsw2000.mvpapp.data
+
+import ru.profitsw2000.mvpapp.domain.LoginApi
+import ru.profitsw2000.mvpapp.domain.entities.UserProfile
 
 class TestLoginApiImpl : LoginApi {
 

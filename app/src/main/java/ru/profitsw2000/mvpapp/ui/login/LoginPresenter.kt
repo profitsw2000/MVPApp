@@ -1,7 +1,8 @@
-package ru.profitsw2000.mvpapp
+package ru.profitsw2000.mvpapp.ui.login
 
 import android.os.Handler
 import android.os.Looper
+import ru.profitsw2000.mvpapp.data.TestLoginApiImpl
 
 class LoginPresenter(private val loginApi: TestLoginApiImpl): LoginContract.Presenter {
 

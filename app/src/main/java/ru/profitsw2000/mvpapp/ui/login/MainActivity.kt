@@ -1,4 +1,4 @@
-package ru.profitsw2000.mvpapp
+package ru.profitsw2000.mvpapp.ui.login
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -7,6 +7,9 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
+import ru.profitsw2000.mvpapp.ui.AccountActivity
+import ru.profitsw2000.mvpapp.R
+import ru.profitsw2000.mvpapp.data.TestLoginApiImpl
 import ru.profitsw2000.mvpapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), LoginContract.View {

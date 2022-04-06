@@ -1,4 +1,4 @@
-package ru.profitsw2000.mvpapp
+package ru.profitsw2000.mvpapp.ui.login
 
 import androidx.annotation.MainThread
 
