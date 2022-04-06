@@ -10,6 +10,8 @@ class LoginContract {
         @MainThread
         fun setRestorePasswordSuccess()
         @MainThread
+        fun setSignUpSuccess()
+        @MainThread
         fun setError(errorNumber: Int)
         @MainThread
         fun showProgress()
@@ -21,5 +23,6 @@ class LoginContract {
         fun onAttach(view: View)
         fun onLogin(login: String, password: String)
         fun onRestorePassword(login: String)
+        fun onSignUp(login: String, password: String)
     }
 }

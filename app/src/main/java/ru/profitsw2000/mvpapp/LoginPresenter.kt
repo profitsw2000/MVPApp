@@ -18,12 +18,12 @@ class LoginPresenter(private val loginApi: TestLoginApiImpl): LoginContract.Pres
         Thread {
             Thread.sleep(3_000)
             uiHandler.post {
-                view?.hideProgress()
                 if (loginApi.login(login,password)) {
                     view?.setSignInSuccess()
                 } else {
                     view?.setError(1)
                 }
+                view?.hideProgress()
             }
         }.start()
     }
@@ -33,9 +33,23 @@ class LoginPresenter(private val loginApi: TestLoginApiImpl): LoginContract.Pres
         Thread {
             Thread.sleep(2_000)
             uiHandler.post {
-                view?.hideProgress()
                 if (loginApi.restorePassword(login)) view?.setRestorePasswordSuccess()
                 else view?.setError(2)
+                view?.hideProgress()
+            }
+        }.start()
+    }
+
+    override fun onSignUp(login: String, password: String) {
+        view?.showProgress()
+        Thread {
+            Thread.sleep(4_000)
+            uiHandler.post {
+                if (login.isNotEmpty() && password.isNotEmpty()) {
+                    if(loginApi.register(login,password)) view?.setSignUpSuccess()
+                    else view?.setError(3)
+                } else view?.setError(4)
+                view?.hideProgress()
             }
         }.start()
     }

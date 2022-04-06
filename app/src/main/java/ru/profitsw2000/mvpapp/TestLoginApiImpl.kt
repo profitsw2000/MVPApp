@@ -13,9 +13,12 @@ class TestLoginApiImpl : LoginApi {
     }
 
     override fun register(login: String, password: String): Boolean {
-        Thread.sleep(2_000)
-
-        return login.isNotEmpty()
+        for(user in users){
+            if(login.equals(user.login,true))
+                return false
+        }
+        users.add(UserProfile(login, password))
+        return true
     }
 
     override fun logout(): Boolean {

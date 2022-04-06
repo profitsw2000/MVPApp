@@ -29,6 +29,12 @@ class MainActivity : AppCompatActivity(), LoginContract.View {
         binding.tvForgotPassword.setOnClickListener {
             presenter?.onRestorePassword(binding.loginEditText.text.toString())
         }
+
+        binding.tvSignUp.setOnClickListener {
+            presenter?.onSignUp(
+                binding.loginEditText.text.toString(),
+                binding.passwordEditText.text.toString())
+        }
     }
 
     private fun restorePresenter(): LoginPresenter {
@@ -47,13 +53,19 @@ class MainActivity : AppCompatActivity(), LoginContract.View {
     }
 
     override fun setRestorePasswordSuccess() {
-        this.showDialog("Восстановление пароля", "Пароль был выслан на электронный адрес.")
+        this.showDialog(getString(R.string.dialog_restore_password_success_title), getString(R.string.dialog_restore_password_success_text))
+    }
+
+    override fun setSignUpSuccess() {
+        this.showDialog(getString(R.string.dialog_sign_up_success_title), getString(R.string.dialog_sign_up_success_text))
     }
 
     override fun setError(errorNumber: Int) {
         when(errorNumber){
-            1 -> showDialog("Ошибка входа", "Неверный логин/пароль")
-            2 -> showDialog("Ошибка", "Пользователь не найден")
+            1 -> showDialog(getString(R.string.dialog_sign_in_error_title), getString(R.string.dialog_sign_in_error_text))
+            2 -> showDialog(getString(R.string.dialog_restore_password_error_title), getString(R.string.dialog_restore_password_error_text))
+            3 -> showDialog(getString(R.string.dialog_registration_error_title), getString(R.string.dialog_registration_error_text))
+            4 -> showDialog(getString(R.string.dialog_empty_field_error_title), getString(R.string.dialog_empty_field_error_text))
             else -> {}
         }
     }
