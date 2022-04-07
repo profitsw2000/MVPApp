@@ -36,4 +36,16 @@ class TestLoginApiImpl : LoginApi {
         }
         return false
     }
+
+    override fun changePassword(password: String): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun changeEmail(login: String): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun removeAccount(login: String): Boolean {
+        TODO("Not yet implemented")
+    }
 }
