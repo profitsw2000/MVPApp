@@ -11,6 +11,7 @@ import ru.profitsw2000.mvpapp.R
 import ru.profitsw2000.mvpapp.data.TestLoginApiImpl
 import ru.profitsw2000.mvpapp.databinding.ActivityMainBinding
 import ru.profitsw2000.mvpapp.ui.*
+import ru.profitsw2000.mvpapp.ui.screens.AccountActivity
 
 class MainActivity : AppCompatActivity(), LoginContract.View {
     private lateinit var binding: ActivityMainBinding

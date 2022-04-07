@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MVPApp">
         <activity
-            android:name=".ui.AccountActivity"
+            android:name=".ui.screens.AccountActivity"
             android:exported="false" />
         <activity
             android:name=".ui.login.MainActivity"
