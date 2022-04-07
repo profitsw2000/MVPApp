@@ -10,10 +10,13 @@ interface LoginUseCase {
               @MainThread callback: (Boolean) -> Unit)
 
     @WorkerThread
-    fun register(login: String, password: String): Boolean
+    fun register(login: String,
+                 password: String,
+                 @MainThread callback: (Boolean) -> Unit)
 
     @WorkerThread
-    fun restorePassword(login: String): Boolean
+    fun restorePassword(login: String,
+                        @MainThread callback: (Boolean) -> Unit)
 
     @WorkerThread
     fun logout(): Boolean

@@ -8,8 +8,11 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import ru.profitsw2000.mvpapp.R
+import ru.profitsw2000.mvpapp.app
+import ru.profitsw2000.mvpapp.data.LoginUseCaseImpl
 import ru.profitsw2000.mvpapp.data.TestLoginApiImpl
 import ru.profitsw2000.mvpapp.databinding.ActivityMainBinding
+import ru.profitsw2000.mvpapp.domain.LoginUseCase
 import ru.profitsw2000.mvpapp.ui.*
 import ru.profitsw2000.mvpapp.ui.screens.AccountActivity
 
@@ -43,7 +46,7 @@ class MainActivity : AppCompatActivity(), LoginContract.View {
 
     private fun restorePresenter(): LoginPresenter {
         val presenter = lastCustomNonConfigurationInstance as? LoginPresenter
-        return presenter ?: LoginPresenter(loginApi = TestLoginApiImpl())
+        return presenter ?: LoginPresenter(app.loginUseCase)
     }
 
     override fun onRetainCustomNonConfigurationInstance(): Any? {

@@ -9,6 +9,7 @@ class TestLoginApiImpl : LoginApi {
 
     override fun login(login: String, password: String): Boolean {
         for(user in users){
+            Thread.sleep(3_000)
             if(login.equals(user.login,true) && password.equals(user.password,true))
                 return true
         }
@@ -16,6 +17,7 @@ class TestLoginApiImpl : LoginApi {
     }
 
     override fun register(login: String, password: String): Boolean {
+        Thread.sleep(3_000)
         for(user in users){
             if(login.equals(user.login,true))
                 return false
@@ -30,6 +32,7 @@ class TestLoginApiImpl : LoginApi {
     }
 
     override fun restorePassword(login: String): Boolean {
+        Thread.sleep(3_000)
         for(user in users){
             if(login.equals(user.login,true))
                 return true
