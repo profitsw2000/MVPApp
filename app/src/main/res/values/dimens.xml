@@ -3,4 +3,5 @@
     <dimen name="main_screen_top_margin">16dp</dimen>
     <dimen name="ext_login_buttons_text_size">16sp</dimen>
     <dimen name="login_successful_text_size">20sp</dimen>
+    <dimen name="main_constraint_padding">20dp</dimen>
 </resources>
