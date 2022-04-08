@@ -1,10 +1,11 @@
 package ru.profitsw2000.mvpapp.ui.login
 
 import ru.profitsw2000.mvpapp.domain.LoginUseCase
-import ru.profitsw2000.mvpapp.ui.ERROR_EMPTY_FIELD
-import ru.profitsw2000.mvpapp.ui.ERROR_PASSWORD_RESTORE
-import ru.profitsw2000.mvpapp.ui.ERROR_SIGN_IN
-import ru.profitsw2000.mvpapp.ui.ERROR_SIGN_UP
+
+private const val ERROR_SIGN_IN = 1
+private const val ERROR_PASSWORD_RESTORE = 2
+private const val ERROR_SIGN_UP = 3
+private const val ERROR_EMPTY_FIELD = 4
 
 class LoginPresenter(private val loginUseCase: LoginUseCase): LoginContract.Presenter {
 

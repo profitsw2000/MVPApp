@@ -8,14 +8,12 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import ru.profitsw2000.mvpapp.R
 import ru.profitsw2000.mvpapp.app
-import ru.profitsw2000.mvpapp.databinding.ActivityMainBinding
 import ru.profitsw2000.mvpapp.databinding.ActivitySignUpBinding
-import ru.profitsw2000.mvpapp.ui.ERROR_EMPTY_FIELD
-import ru.profitsw2000.mvpapp.ui.ERROR_PASSWORD_RESTORE
-import ru.profitsw2000.mvpapp.ui.ERROR_SIGN_IN
-import ru.profitsw2000.mvpapp.ui.ERROR_SIGN_UP
 import ru.profitsw2000.mvpapp.ui.login.LoginContract
 import ru.profitsw2000.mvpapp.ui.login.LoginPresenter
+
+private const val ERROR_SIGN_UP = 3
+private const val ERROR_EMPTY_FIELD = 4
 
 class SignUpActivity : AppCompatActivity(), LoginContract.View {
 

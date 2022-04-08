@@ -9,14 +9,13 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import ru.profitsw2000.mvpapp.R
 import ru.profitsw2000.mvpapp.app
-import ru.profitsw2000.mvpapp.data.LoginUseCaseImpl
-import ru.profitsw2000.mvpapp.data.TestLoginApiImpl
 import ru.profitsw2000.mvpapp.databinding.ActivityMainBinding
-import ru.profitsw2000.mvpapp.domain.LoginUseCase
-import ru.profitsw2000.mvpapp.ui.*
 import ru.profitsw2000.mvpapp.ui.screens.AccountActivity
 import ru.profitsw2000.mvpapp.ui.screens.ForgotPasswordActivity
 import ru.profitsw2000.mvpapp.ui.screens.SignUpActivity
+
+private const val ERROR_SIGN_IN = 1
+private const val ERROR_EMPTY_FIELD = 4
 
 class MainActivity : AppCompatActivity(), LoginContract.View {
     private lateinit var binding: ActivityMainBinding
@@ -72,8 +71,6 @@ class MainActivity : AppCompatActivity(), LoginContract.View {
     override fun setError(errorNumber: Int) {
         when(errorNumber){
             ERROR_SIGN_IN -> showDialog(getString(R.string.dialog_sign_in_error_title), getString(R.string.dialog_sign_in_error_text))
-            ERROR_PASSWORD_RESTORE -> showDialog(getString(R.string.dialog_restore_password_error_title), getString(R.string.dialog_restore_password_error_text))
-            ERROR_SIGN_UP -> showDialog(getString(R.string.dialog_registration_error_title), getString(R.string.dialog_registration_error_text))
             ERROR_EMPTY_FIELD -> showDialog(getString(R.string.dialog_empty_field_error_title), getString(R.string.dialog_empty_field_error_text))
             else -> {}
         }
