@@ -19,7 +19,7 @@ class TestLoginApiImpl : LoginApi {
         return false
     }
 
-    override fun register(login: String, password: String): Boolean {
+    override fun register(login: String, password: String, email: String): Boolean {
         val userList = localRepo.getAllUsers()
 
         Thread.sleep(3_000)
@@ -27,7 +27,7 @@ class TestLoginApiImpl : LoginApi {
             if(login.equals(user.login,true))
                 return false
         }
-        localRepo.addUser(UserProfile(userList.size.toString(),login, password, "user@mvp.ru"))
+        localRepo.addUser(UserProfile(userList.size.toString(),login, password, email))
         return true
     }
 
@@ -36,26 +36,26 @@ class TestLoginApiImpl : LoginApi {
         return true
     }
 
-    override fun restorePassword(login: String): Boolean {
+    override fun restorePassword(email: String): Boolean {
         val userList = localRepo.getAllUsers()
 
         Thread.sleep(3_000)
         for(user in userList){
-            if(login.equals(user.login,true))
+            if(email.equals(user.email,true))
                 return true
         }
         return false
     }
 
-    override fun changePassword(password: String): Boolean {
+    override fun changePassword(login: String, password: String): Boolean {
         TODO("Not yet implemented")
     }
 
-    override fun changeEmail(login: String): Boolean {
+    override fun changeEmail(login: String, password: String, email: String): Boolean {
         TODO("Not yet implemented")
     }
 
-    override fun removeAccount(login: String): Boolean {
+    override fun removeAccount(login: String, password: String): Boolean {
         TODO("Not yet implemented")
     }
 }
