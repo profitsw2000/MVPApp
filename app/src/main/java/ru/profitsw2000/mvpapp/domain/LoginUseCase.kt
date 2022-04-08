@@ -12,10 +12,11 @@ interface LoginUseCase {
     @WorkerThread
     fun register(login: String,
                  password: String,
+                 email: String,
                  @MainThread callback: (Boolean) -> Unit)
 
     @WorkerThread
-    fun restorePassword(login: String,
+    fun restorePassword(email: String,
                         @MainThread callback: (Boolean) -> Unit)
 
     @WorkerThread

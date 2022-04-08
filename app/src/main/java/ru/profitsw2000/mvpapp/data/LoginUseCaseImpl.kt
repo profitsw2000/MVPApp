@@ -23,19 +23,20 @@ class LoginUseCaseImpl(
 
     override fun register(login: String,
                           password: String,
+                          email: String,
                           @MainThread callback: (Boolean) -> Unit) {
         Thread {
-            val result = api.register(login, password)
+            val result = api.register(login, password, email)
             uiHandler.post {
                 callback(result)
             }
         }.start()
     }
 
-    override fun restorePassword(login: String,
+    override fun restorePassword(email: String,
                                  @MainThread callback: (Boolean) -> Unit) {
         Thread {
-            val result = api.restorePassword(login)
+            val result = api.restorePassword(email)
             uiHandler.post {
                 callback(result)
             }
