@@ -5,7 +5,9 @@ import ru.profitsw2000.mvpapp.domain.entities.UserProfile
 
 class TestLoginApiImpl : LoginApi {
 
-    val users: MutableList<UserProfile> = mutableListOf(UserProfile("admin","1234"), UserProfile("user","0000"))
+    val users: MutableList<UserProfile> =
+        mutableListOf(UserProfile("1","admin","1234", "admin@mvp.ru"),
+                        UserProfile("2","user","0000","user@mvp.ru"))
 
     override fun login(login: String, password: String): Boolean {
         for(user in users){
@@ -22,7 +24,7 @@ class TestLoginApiImpl : LoginApi {
             if(login.equals(user.login,true))
                 return false
         }
-        users.add(UserProfile(login, password))
+        users.add(UserProfile("3",login, password, "user@mvp.ru"))
         return true
     }
 
