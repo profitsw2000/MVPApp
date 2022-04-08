@@ -1,17 +1,18 @@
 package ru.profitsw2000.mvpapp.data
 
+import ru.profitsw2000.mvpapp.data.repository.LocalRepoImpl
 import ru.profitsw2000.mvpapp.domain.LoginApi
 import ru.profitsw2000.mvpapp.domain.entities.UserProfile
 
 class TestLoginApiImpl : LoginApi {
 
-    val users: MutableList<UserProfile> =
-        mutableListOf(UserProfile("1","admin","1234", "admin@mvp.ru"),
-                        UserProfile("2","user","0000","user@mvp.ru"))
+    private val localRepo = LocalRepoImpl()
 
     override fun login(login: String, password: String): Boolean {
-        for(user in users){
-            Thread.sleep(3_000)
+        val userList = localRepo.getAllUsers()
+
+        Thread.sleep(3_000)
+        for(user in userList){
             if(login.equals(user.login,true) && password.equals(user.password,true))
                 return true
         }
@@ -19,12 +20,14 @@ class TestLoginApiImpl : LoginApi {
     }
 
     override fun register(login: String, password: String): Boolean {
+        val userList = localRepo.getAllUsers()
+
         Thread.sleep(3_000)
-        for(user in users){
+        for(user in userList){
             if(login.equals(user.login,true))
                 return false
         }
-        users.add(UserProfile("3",login, password, "user@mvp.ru"))
+        localRepo.addUser(UserProfile(userList.size.toString(),login, password, "user@mvp.ru"))
         return true
     }
 
@@ -34,8 +37,10 @@ class TestLoginApiImpl : LoginApi {
     }
 
     override fun restorePassword(login: String): Boolean {
+        val userList = localRepo.getAllUsers()
+
         Thread.sleep(3_000)
-        for(user in users){
+        for(user in userList){
             if(login.equals(user.login,true))
                 return true
         }
