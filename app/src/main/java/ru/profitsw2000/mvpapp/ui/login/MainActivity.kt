@@ -15,6 +15,7 @@ import ru.profitsw2000.mvpapp.databinding.ActivityMainBinding
 import ru.profitsw2000.mvpapp.domain.LoginUseCase
 import ru.profitsw2000.mvpapp.ui.*
 import ru.profitsw2000.mvpapp.ui.screens.AccountActivity
+import ru.profitsw2000.mvpapp.ui.screens.ForgotPasswordActivity
 import ru.profitsw2000.mvpapp.ui.screens.SignUpActivity
 
 class MainActivity : AppCompatActivity(), LoginContract.View {
@@ -35,7 +36,8 @@ class MainActivity : AppCompatActivity(), LoginContract.View {
         }
 
         binding.tvForgotPassword.setOnClickListener {
-            presenter?.onRestorePassword(binding.loginEditText.text.toString())
+            val intent = Intent(this, ForgotPasswordActivity::class.java)
+            startActivity(intent)
         }
 
         binding.tvSignUp.setOnClickListener {

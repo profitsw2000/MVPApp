@@ -65,6 +65,7 @@ class SignUpActivity : AppCompatActivity(), LoginContract.View {
             ERROR_EMPTY_FIELD -> showDialog(getString(R.string.dialog_empty_field_error_title), getString(R.string.dialog_empty_field_error_text))
             else -> {}
         }
+        binding.signUpScreenMainGroup.visibility = View.VISIBLE
     }
 
     override fun showProgress() {
@@ -73,6 +74,7 @@ class SignUpActivity : AppCompatActivity(), LoginContract.View {
             tvSignUpSuccesful.visibility = View.GONE
             progressBar.visibility = View.VISIBLE
         }
+        hideKeyboard(this)
     }
 
     override fun hideProgress() {

@@ -1,8 +1,5 @@
 package ru.profitsw2000.mvpapp.ui.login
 
-import android.os.Handler
-import android.os.Looper
-import ru.profitsw2000.mvpapp.data.TestLoginApiImpl
 import ru.profitsw2000.mvpapp.domain.LoginUseCase
 import ru.profitsw2000.mvpapp.ui.ERROR_EMPTY_FIELD
 import ru.profitsw2000.mvpapp.ui.ERROR_PASSWORD_RESTORE
@@ -31,13 +28,15 @@ class LoginPresenter(private val loginUseCase: LoginUseCase): LoginContract.Pres
         }
     }
 
-    override fun onRestorePassword(login: String) {
-        view?.showProgress()
-        loginUseCase.restorePassword(login) {result ->
-            if (result) view?.setRestorePasswordSuccess()
-            else view?.setError(ERROR_PASSWORD_RESTORE)
-            view?.hideProgress()
-        }
+    override fun onRestorePassword(email: String) {
+        if (email.isNotEmpty()) {
+            view?.showProgress()
+            loginUseCase.restorePassword(email) { result ->
+                if (result) view?.setRestorePasswordSuccess()
+                else view?.setError(ERROR_PASSWORD_RESTORE)
+                view?.hideProgress()
+            }
+        } else {view?.setError(ERROR_EMPTY_FIELD)}
     }
 
     override fun onSignUp(email: String, login: String, password: String) {
