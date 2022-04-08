@@ -22,4 +22,5 @@
     <string name="e_mail_hint_text">Эл. почта</string>
     <string name="sign_up_button_text">Зарегистрироваться</string>
     <string name="tv_sign_up_success">Регистрация завершена успешно!</string>
+    <string name="restore_password_button_text">Восстановить пароль</string>
 </resources>

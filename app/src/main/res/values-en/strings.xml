@@ -22,4 +22,6 @@
     <string name="dialog_empty_field_error_text">Empty fields detected.</string>
     <string name="e_mail_hint_text">E-mail</string>
     <string name="sign_up_button_text">Sign Up</string>
+    <string name="tv_sign_up_success">Sign Up successfully!</string>
+    <string name="restore_password_button_text">Restore password</string>
 </resources>

@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MVPApp">
         <activity
+            android:name=".ui.screens.ForgotPasswordActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.screens.SignUpActivity"
             android:exported="false" />
         <activity
