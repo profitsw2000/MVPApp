@@ -40,10 +40,10 @@ class LoginPresenter(private val loginUseCase: LoginUseCase): LoginContract.Pres
         }
     }
 
-    override fun onSignUp(login: String, password: String) {
-        if (login.isNotEmpty() && password.isNotEmpty()) {
+    override fun onSignUp(email: String, login: String, password: String) {
+        if (email.isNotEmpty() && login.isNotEmpty() && password.isNotEmpty()) {
             view?.showProgress()
-            loginUseCase.register(login, password, "email") { result ->
+            loginUseCase.register(login, password, email) { result ->
                 if(result) view?.setSignUpSuccess()
                 else view?.setError(ERROR_SIGN_UP)
 

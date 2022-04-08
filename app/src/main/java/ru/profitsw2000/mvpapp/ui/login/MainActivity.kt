@@ -15,6 +15,7 @@ import ru.profitsw2000.mvpapp.databinding.ActivityMainBinding
 import ru.profitsw2000.mvpapp.domain.LoginUseCase
 import ru.profitsw2000.mvpapp.ui.*
 import ru.profitsw2000.mvpapp.ui.screens.AccountActivity
+import ru.profitsw2000.mvpapp.ui.screens.SignUpActivity
 
 class MainActivity : AppCompatActivity(), LoginContract.View {
     private lateinit var binding: ActivityMainBinding
@@ -38,9 +39,8 @@ class MainActivity : AppCompatActivity(), LoginContract.View {
         }
 
         binding.tvSignUp.setOnClickListener {
-            presenter?.onSignUp(
-                binding.loginEditText.text.toString(),
-                binding.passwordEditText.text.toString())
+            val intent = Intent(this, SignUpActivity::class.java)
+            startActivity(intent)
         }
     }
 
