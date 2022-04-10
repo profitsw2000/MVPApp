@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package ru.profitsw2000.mvpapp.ui.login
 
 import android.app.Activity
@@ -78,6 +80,7 @@ class MainActivity : AppCompatActivity() {
         return viewModel ?: LoginViewModel(app.loginUseCase)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onRetainCustomNonConfigurationInstance(): Any? {
         return viewModel
     }
@@ -132,7 +135,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showDialog(title: String, message: String) {
-        this?.let {
+        this.let {
             AlertDialog.Builder(it)
                 .setTitle(title)
                 .setMessage(message)
