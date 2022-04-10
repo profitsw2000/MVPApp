@@ -16,15 +16,17 @@ class LoginViewModel(private val loginUseCase: LoginUseCase): LoginContract.View
     override val errorCode: Publisher<Int?> = Publisher()
 
     override fun onLogin(login: String, password: String) {
-        showProgress.post(true)
-        loginUseCase.login(login, password) {result ->
-            if (result) {
-                isSignInSuccess.post(true)
-            } else {
-                errorCode.post(ERROR_SIGN_IN)
-            }
+        if (login.isNotEmpty() && password.isNotEmpty()) {
             showProgress.post(true)
-        }
+            loginUseCase.login(login, password) { result ->
+                if (result) {
+                    isSignInSuccess.post(true)
+                } else {
+                    errorCode.post(ERROR_SIGN_IN)
+                }
+                showProgress.post(false)
+            }
+        } else {errorCode.post(ERROR_EMPTY_FIELD)}
     }
 
     override fun onRestorePassword(email: String) {
