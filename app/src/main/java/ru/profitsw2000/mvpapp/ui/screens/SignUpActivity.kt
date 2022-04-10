@@ -4,60 +4,93 @@ import android.app.Activity
 import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import ru.profitsw2000.mvpapp.R
 import ru.profitsw2000.mvpapp.app
 import ru.profitsw2000.mvpapp.databinding.ActivitySignUpBinding
 import ru.profitsw2000.mvpapp.ui.login.LoginContract
-import ru.profitsw2000.mvpapp.ui.login.LoginPresenter
+import ru.profitsw2000.mvpapp.ui.login.LoginViewModel
 
 private const val ERROR_SIGN_UP = 3
 private const val ERROR_EMPTY_FIELD = 4
 
-class SignUpActivity : AppCompatActivity(), LoginContract.View {
+class SignUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
-    private var presenter: LoginContract.Presenter? = null
+    private var viewModel: LoginContract.ViewModel? = null
+    private val handler: Handler by lazy { Handler(Looper.getMainLooper()) }
+    //private var presenter: LoginContract.Presenter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        presenter = restorePresenter()
-        presenter?.onAttach(this)
+        viewModel = restoreViewModel()
+/*        presenter = restorePresenter()
+        presenter?.onAttach(this)*/
 
         binding.signUpScreenSignUpButton.setOnClickListener {
             with(binding){
-                presenter?.onSignUp(
+                viewModel?.onSignUp(
                     signUpScreenEmailEditText.text.toString(),
                     signUpScreenLoginEditText.text.toString(),
                     signUpScreenPasswordEditText.text.toString())
             }
         }
+
+        viewModel?.isSignUpSuccess?.subscribe(handler) {
+            if(it == true) {
+                setSignUpSuccess()
+            }
+        }
+
+        viewModel?.showProgress?.subscribe(handler) {
+            if (it == true) {
+                showProgress()
+            } else {
+                hideProgress()
+            }
+        }
+
+        viewModel?.errorCode?.subscribe(handler){
+            setError(it!!)
+        }
     }
 
-    private fun restorePresenter(): LoginPresenter {
+    private fun restoreViewModel(): LoginViewModel {
+        val viewModel = lastCustomNonConfigurationInstance as? LoginViewModel
+        return viewModel ?: LoginViewModel(app.loginUseCase)
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onRetainCustomNonConfigurationInstance(): Any? {
+        return viewModel
+    }
+
+/*    private fun restorePresenter(): LoginPresenter {
         val presenter = lastCustomNonConfigurationInstance as? LoginPresenter
         return presenter ?: LoginPresenter(app.loginUseCase)
     }
 
     override fun onRetainCustomNonConfigurationInstance(): Any? {
         return presenter
-    }
+    }*/
 
-    override fun setSignInSuccess() {
+/*    override fun setSignInSuccess() {
     }
 
     override fun setRestorePasswordSuccess() {
-    }
+    }*/
 
-    override fun setSignUpSuccess() {
+    private fun setSignUpSuccess() {
         binding.signUpScreenMainGroup.visibility = View.GONE
         binding.tvSignUpSuccesful.visibility = View.VISIBLE
     }
 
-    override fun setError(errorNumber: Int) {
+    private fun setError(errorNumber: Int) {
         when(errorNumber){
             ERROR_SIGN_UP -> showDialog(getString(R.string.dialog_registration_error_title), getString(R.string.dialog_registration_error_text))
             ERROR_EMPTY_FIELD -> showDialog(getString(R.string.dialog_empty_field_error_title), getString(R.string.dialog_empty_field_error_text))
@@ -66,7 +99,7 @@ class SignUpActivity : AppCompatActivity(), LoginContract.View {
         binding.signUpScreenMainGroup.visibility = View.VISIBLE
     }
 
-    override fun showProgress() {
+    private fun showProgress() {
         with(binding) {
             signUpScreenMainGroup.visibility = View.GONE
             tvSignUpSuccesful.visibility = View.GONE
@@ -75,7 +108,7 @@ class SignUpActivity : AppCompatActivity(), LoginContract.View {
         hideKeyboard(this)
     }
 
-    override fun hideProgress() {
+    private fun hideProgress() {
         with(binding) {
             progressBar.visibility = View.GONE
         }

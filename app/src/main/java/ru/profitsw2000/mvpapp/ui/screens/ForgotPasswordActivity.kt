@@ -79,7 +79,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
             else -> {}
         }
         binding.forgotPasswordScreenMainGroup.visibility = View.VISIBLE
-        binding.forgotPasswordEmailEditText.getText().clear()
+        binding.forgotPasswordEmailEditText.text.clear()
     }
 
     private fun showProgress() {
