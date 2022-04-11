@@ -13,8 +13,8 @@ import android.view.inputmethod.InputMethodManager
 import ru.profitsw2000.mvpapp.R
 import ru.profitsw2000.mvpapp.app
 import ru.profitsw2000.mvpapp.databinding.ActivityForgotPasswordBinding
-import ru.profitsw2000.mvpapp.ui.login.LoginContract
 import ru.profitsw2000.mvpapp.ui.login.LoginViewModel
+import ru.profitsw2000.mvpapp.ui.login.ViewModel
 
 private const val ERROR_PASSWORD_RESTORE = 2
 private const val ERROR_EMPTY_FIELD = 4
@@ -22,7 +22,7 @@ private const val ERROR_EMPTY_FIELD = 4
 class ForgotPasswordActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityForgotPasswordBinding
-    private var viewModel: LoginContract.ViewModel? = null
+    private var viewModel: ViewModel? = null
     private val handler: Handler by lazy { Handler(Looper.getMainLooper()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,6 +54,13 @@ class ForgotPasswordActivity : AppCompatActivity() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel?.isRestorePasswordSuccess?.unsubscribeAll()
+        viewModel?.showProgress?.unsubscribeAll()
+        viewModel?.errorCode?.unsubscribeAll()
+    }
+
     private fun restoreViewModel(): LoginViewModel {
         val viewModel = lastCustomNonConfigurationInstance as? LoginViewModel
         return viewModel ?: LoginViewModel(app.loginUseCase)
@@ -67,8 +74,8 @@ class ForgotPasswordActivity : AppCompatActivity() {
     private fun setRestorePasswordSuccess() {
         with(binding){
             forgotPasswordScreenMainGroup.visibility = View.GONE
-            tvRestorePasswordSuccesful.visibility = View.GONE
-            binding.tvRestorePasswordSuccesful.visibility = View.VISIBLE
+            restorePasswordSuccessfulTextView.visibility = View.GONE
+            binding.restorePasswordSuccessfulTextView.visibility = View.VISIBLE
         }
     }
 

@@ -24,7 +24,7 @@ private const val ERROR_EMPTY_FIELD = 4
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private var viewModel: LoginContract.ViewModel? = null
+    private var viewModel: ViewModel? = null
     private val handler: Handler by lazy { Handler(Looper.getMainLooper()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,12 +39,12 @@ class MainActivity : AppCompatActivity() {
                 binding.passwordEditText.text.toString())
         }
 
-        binding.tvForgotPassword.setOnClickListener {
+        binding.forgotPasswordTextView.setOnClickListener {
             val intent = Intent(this, ForgotPasswordActivity::class.java)
             startActivity(intent)
         }
 
-        binding.tvSignUp.setOnClickListener {
+        binding.signUpTextView.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
         }
@@ -116,8 +116,8 @@ class MainActivity : AppCompatActivity() {
         with(binding){
             loginEditText.alpha = alpha
             passwordEditText.alpha = alpha
-            tvForgotPassword.alpha = alpha
-            tvSignUp.alpha = alpha
+            forgotPasswordTextView.alpha = alpha
+            signUpTextView.alpha = alpha
             signInButton.alpha = alpha
         }
     }

@@ -11,26 +11,24 @@ import android.view.inputmethod.InputMethodManager
 import ru.profitsw2000.mvpapp.R
 import ru.profitsw2000.mvpapp.app
 import ru.profitsw2000.mvpapp.databinding.ActivitySignUpBinding
-import ru.profitsw2000.mvpapp.ui.login.LoginContract
 import ru.profitsw2000.mvpapp.ui.login.LoginViewModel
+import ru.profitsw2000.mvpapp.ui.login.ViewModel
 
 private const val ERROR_SIGN_UP = 3
 private const val ERROR_EMPTY_FIELD = 4
 
+@Suppress("DEPRECATION")
 class SignUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
-    private var viewModel: LoginContract.ViewModel? = null
+    private var viewModel: ViewModel? = null
     private val handler: Handler by lazy { Handler(Looper.getMainLooper()) }
-    //private var presenter: LoginContract.Presenter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
         viewModel = restoreViewModel()
-/*        presenter = restorePresenter()
-        presenter?.onAttach(this)*/
 
         binding.signUpScreenSignUpButton.setOnClickListener {
             with(binding){
@@ -60,6 +58,13 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel?.isSignUpSuccess?.unsubscribeAll()
+        viewModel?.showProgress?.unsubscribeAll()
+        viewModel?.errorCode?.unsubscribeAll()
+    }
+
     private fun restoreViewModel(): LoginViewModel {
         val viewModel = lastCustomNonConfigurationInstance as? LoginViewModel
         return viewModel ?: LoginViewModel(app.loginUseCase)
@@ -70,24 +75,9 @@ class SignUpActivity : AppCompatActivity() {
         return viewModel
     }
 
-/*    private fun restorePresenter(): LoginPresenter {
-        val presenter = lastCustomNonConfigurationInstance as? LoginPresenter
-        return presenter ?: LoginPresenter(app.loginUseCase)
-    }
-
-    override fun onRetainCustomNonConfigurationInstance(): Any? {
-        return presenter
-    }*/
-
-/*    override fun setSignInSuccess() {
-    }
-
-    override fun setRestorePasswordSuccess() {
-    }*/
-
     private fun setSignUpSuccess() {
         binding.signUpScreenMainGroup.visibility = View.GONE
-        binding.tvSignUpSuccesful.visibility = View.VISIBLE
+        binding.signUpSuccessfulTextView.visibility = View.VISIBLE
     }
 
     private fun setError(errorNumber: Int) {
@@ -102,7 +92,7 @@ class SignUpActivity : AppCompatActivity() {
     private fun showProgress() {
         with(binding) {
             signUpScreenMainGroup.visibility = View.GONE
-            tvSignUpSuccesful.visibility = View.GONE
+            signUpSuccessfulTextView.visibility = View.GONE
             progressBar.visibility = View.VISIBLE
         }
         hideKeyboard(this)
@@ -127,7 +117,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun showDialog(title: String, message: String) {
-        this?.let {
+        this.let {
             AlertDialog.Builder(it)
                 .setTitle(title)
                 .setMessage(message)

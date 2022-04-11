@@ -8,7 +8,7 @@ private const val ERROR_PASSWORD_RESTORE = 2
 private const val ERROR_SIGN_UP = 3
 private const val ERROR_EMPTY_FIELD = 4
 
-class LoginViewModel(private val loginUseCase: LoginUseCase): LoginContract.ViewModel {
+class LoginViewModel(private val loginUseCase: LoginUseCase): ViewModel {
     override val showProgress: Publisher<Boolean> = Publisher()
     override val isSignInSuccess: Publisher<Boolean> = Publisher()
     override val isRestorePasswordSuccess: Publisher<Boolean> = Publisher()
