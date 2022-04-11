@@ -22,7 +22,7 @@ class LoginContract {
     interface Presenter {
         fun onAttach(view: View)
         fun onLogin(login: String, password: String)
-        fun onRestorePassword(login: String)
-        fun onSignUp(login: String, password: String)
+        fun onRestorePassword(email: String)
+        fun onSignUp(email: String, login: String, password: String)
     }
 }

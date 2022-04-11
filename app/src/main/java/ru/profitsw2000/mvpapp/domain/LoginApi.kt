@@ -7,11 +7,20 @@ interface LoginApi {
     fun login(login: String, password: String): Boolean
 
     @WorkerThread
-    fun register(login: String, password: String): Boolean
+    fun register(login: String, password: String, email: String): Boolean
+
+    @WorkerThread
+    fun restorePassword(email: String): Boolean
+
+    @WorkerThread
+    fun changePassword(login: String, password: String): Boolean
+
+    @WorkerThread
+    fun changeEmail(login: String, password: String, email: String): Boolean
+
+    @WorkerThread
+    fun removeAccount(login: String, password: String): Boolean
 
     @WorkerThread
     fun logout(): Boolean
-
-    @WorkerThread
-    fun restorePassword(login: String): Boolean
 }

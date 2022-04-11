@@ -1,4 +1,4 @@
-package ru.profitsw2000.mvpapp.ui
+package ru.profitsw2000.mvpapp.ui.screens
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

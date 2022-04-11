@@ -1,17 +1,15 @@
 package ru.profitsw2000.mvpapp.ui.login
 
-import android.os.Handler
-import android.os.Looper
-import ru.profitsw2000.mvpapp.data.TestLoginApiImpl
-import ru.profitsw2000.mvpapp.ui.ERROR_EMPTY_FIELD
-import ru.profitsw2000.mvpapp.ui.ERROR_PASSWORD_RESTORE
-import ru.profitsw2000.mvpapp.ui.ERROR_SIGN_IN
-import ru.profitsw2000.mvpapp.ui.ERROR_SIGN_UP
+import ru.profitsw2000.mvpapp.domain.LoginUseCase
 
-class LoginPresenter(private val loginApi: TestLoginApiImpl): LoginContract.Presenter {
+private const val ERROR_SIGN_IN = 1
+private const val ERROR_PASSWORD_RESTORE = 2
+private const val ERROR_SIGN_UP = 3
+private const val ERROR_EMPTY_FIELD = 4
+
+class LoginPresenter(private val loginUseCase: LoginUseCase): LoginContract.Presenter {
 
     private var view: LoginContract.View? = null
-    private val uiHandler = Handler(Looper.getMainLooper())
 
     override fun onAttach(view: LoginContract.View) {
         this.view = view
@@ -20,42 +18,37 @@ class LoginPresenter(private val loginApi: TestLoginApiImpl): LoginContract.Pres
     override fun onLogin(login: String, password: String) {
 
         view?.showProgress()
-        Thread {
-            Thread.sleep(3_000)
-            uiHandler.post {
-                if (loginApi.login(login,password)) {
-                    view?.setSignInSuccess()
-                } else {
-                    view?.setError(ERROR_SIGN_IN)
-                }
-                view?.hideProgress()
+
+        loginUseCase.login(login, password) {result ->
+            if (result) {
+                view?.setSignInSuccess()
+            } else {
+                view?.setError(ERROR_SIGN_IN)
             }
-        }.start()
+            view?.hideProgress()
+        }
     }
 
-    override fun onRestorePassword(login: String) {
-        view?.showProgress()
-        Thread {
-            Thread.sleep(2_000)
-            uiHandler.post {
-                if (loginApi.restorePassword(login)) view?.setRestorePasswordSuccess()
+    override fun onRestorePassword(email: String) {
+        if (email.isNotEmpty()) {
+            view?.showProgress()
+            loginUseCase.restorePassword(email) { result ->
+                if (result) view?.setRestorePasswordSuccess()
                 else view?.setError(ERROR_PASSWORD_RESTORE)
                 view?.hideProgress()
             }
-        }.start()
+        } else {view?.setError(ERROR_EMPTY_FIELD)}
     }
 
-    override fun onSignUp(login: String, password: String) {
-        view?.showProgress()
-        Thread {
-            Thread.sleep(4_000)
-            uiHandler.post {
-                if (login.isNotEmpty() && password.isNotEmpty()) {
-                    if(loginApi.register(login,password)) view?.setSignUpSuccess()
-                    else view?.setError(ERROR_SIGN_UP)
-                } else view?.setError(ERROR_EMPTY_FIELD)
+    override fun onSignUp(email: String, login: String, password: String) {
+        if (email.isNotEmpty() && login.isNotEmpty() && password.isNotEmpty()) {
+            view?.showProgress()
+            loginUseCase.register(login, password, email) { result ->
+                if(result) view?.setSignUpSuccess()
+                else view?.setError(ERROR_SIGN_UP)
+
                 view?.hideProgress()
             }
-        }.start()
+        } else {view?.setError(ERROR_EMPTY_FIELD)}
     }
 }

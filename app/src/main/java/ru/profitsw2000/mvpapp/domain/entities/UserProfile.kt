@@ -1,6 +1,8 @@
 package ru.profitsw2000.mvpapp.domain.entities
 
 data class UserProfile(
-    val login: String = "admin",
-    val password: String = "1234"
+    val id: String,
+    val login: String,
+    val password: String,
+    val email: String
 )
