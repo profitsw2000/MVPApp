@@ -6,4 +6,8 @@ class hjfjkj {
     fun getNum(gds: Int): Int{
         return gds + hfghd
     }
+
+    fun getNum1(gds: Int): Int{
+        return gds*hfghd
+    }
 }
