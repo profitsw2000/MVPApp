@@ -1,11 +1,12 @@
-package ru.profitsw2000.mvpapp
+package ru.profitsw2000.mvpapp.ui.screens
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import ru.profitsw2000.mvpapp.R
 
-class MainActivity : AppCompatActivity() {
+class AccountActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_account)
     }
 }
