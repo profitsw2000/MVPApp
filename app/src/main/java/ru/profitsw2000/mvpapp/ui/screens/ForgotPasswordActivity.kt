@@ -1,71 +1,95 @@
+@file:Suppress("DEPRECATION")
+
 package ru.profitsw2000.mvpapp.ui.screens
 
 import android.app.Activity
 import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import ru.profitsw2000.mvpapp.R
 import ru.profitsw2000.mvpapp.app
 import ru.profitsw2000.mvpapp.databinding.ActivityForgotPasswordBinding
-import ru.profitsw2000.mvpapp.ui.login.LoginContract
-import ru.profitsw2000.mvpapp.ui.login.LoginPresenter
+import ru.profitsw2000.mvpapp.ui.login.LoginViewModel
+import ru.profitsw2000.mvpapp.ui.login.ViewModel
 
 private const val ERROR_PASSWORD_RESTORE = 2
 private const val ERROR_EMPTY_FIELD = 4
 
-class ForgotPasswordActivity : AppCompatActivity(), LoginContract.View {
+class ForgotPasswordActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityForgotPasswordBinding
-    private var presenter: LoginContract.Presenter? = null
+    private var viewModel: ViewModel? = null
+    private val handler: Handler by lazy { Handler(Looper.getMainLooper()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityForgotPasswordBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        presenter = restorePresenter()
-        presenter?.onAttach(this)
+        viewModel = restoreViewModel()
 
         binding.forgotPasswordButton.setOnClickListener {
-            presenter?.onRestorePassword(binding.forgotPasswordEmailEditText.text.toString())
+            viewModel?.onRestorePassword(binding.forgotPasswordEmailEditText.text.toString())
+        }
+
+        viewModel?.showProgress?.subscribe(handler) {
+            if (it == true) {
+                showProgress()
+            } else {
+                hideProgress()
+            }
+        }
+
+        viewModel?.errorCode?.subscribe(handler){
+            setError(it!!)
+        }
+
+        viewModel?.isRestorePasswordSuccess?.subscribe(handler) {
+            if(it == true) {
+                setRestorePasswordSuccess()
+            }
         }
     }
 
-    private fun restorePresenter(): LoginPresenter {
-        val presenter = lastCustomNonConfigurationInstance as? LoginPresenter
-        return presenter ?: LoginPresenter(app.loginUseCase)
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel?.isRestorePasswordSuccess?.unsubscribeAll()
+        viewModel?.showProgress?.unsubscribeAll()
+        viewModel?.errorCode?.unsubscribeAll()
     }
 
+    private fun restoreViewModel(): LoginViewModel {
+        val viewModel = lastCustomNonConfigurationInstance as? LoginViewModel
+        return viewModel ?: LoginViewModel(app.loginUseCase)
+    }
+
+    @Deprecated("Deprecated in Java")
     override fun onRetainCustomNonConfigurationInstance(): Any? {
-        return presenter
+        return viewModel
     }
 
-    override fun setSignInSuccess() {
-    }
-
-    override fun setRestorePasswordSuccess() {
+    private fun setRestorePasswordSuccess() {
         with(binding){
             forgotPasswordScreenMainGroup.visibility = View.GONE
-            tvRestorePasswordSuccesful.visibility = View.GONE
-            binding.tvRestorePasswordSuccesful.visibility = View.VISIBLE
+            restorePasswordSuccessfulTextView.visibility = View.GONE
+            binding.restorePasswordSuccessfulTextView.visibility = View.VISIBLE
         }
     }
 
-    override fun setSignUpSuccess() {
-    }
-
-    override fun setError(errorNumber: Int) {
+    private fun setError(errorNumber: Int) {
         when(errorNumber){
             ERROR_PASSWORD_RESTORE -> showDialog(getString(R.string.dialog_restore_password_error_title), getString(R.string.dialog_restore_password_error_text))
             ERROR_EMPTY_FIELD -> showDialog(getString(R.string.dialog_empty_field_error_title), getString(R.string.dialog_empty_field_error_text))
             else -> {}
         }
         binding.forgotPasswordScreenMainGroup.visibility = View.VISIBLE
-        binding.forgotPasswordEmailEditText.getText().clear()
+        binding.forgotPasswordEmailEditText.text.clear()
     }
 
-    override fun showProgress() {
+    private fun showProgress() {
         with(binding) {
             forgotPasswordScreenMainGroup.visibility = View.GONE
             progressBar.visibility = View.VISIBLE
@@ -73,7 +97,7 @@ class ForgotPasswordActivity : AppCompatActivity(), LoginContract.View {
         hideKeyboard(this)
     }
 
-    override fun hideProgress() {
+    private fun hideProgress() {
         binding.progressBar.visibility = View.GONE
     }
 
@@ -90,7 +114,7 @@ class ForgotPasswordActivity : AppCompatActivity(), LoginContract.View {
     }
 
     private fun showDialog(title: String, message: String) {
-        this?.let {
+        this.let {
             AlertDialog.Builder(it)
                 .setTitle(title)
                 .setMessage(message)

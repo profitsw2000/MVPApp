@@ -1,9 +1,13 @@
+@file:Suppress("DEPRECATION")
+
 package ru.profitsw2000.mvpapp.ui.login
 
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
@@ -17,58 +21,77 @@ import ru.profitsw2000.mvpapp.ui.screens.SignUpActivity
 private const val ERROR_SIGN_IN = 1
 private const val ERROR_EMPTY_FIELD = 4
 
-class MainActivity : AppCompatActivity(), LoginContract.View {
+class MainActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityMainBinding
-    private var presenter: LoginContract.Presenter? = null
+    private var viewModel: ViewModel? = null
+    private val handler: Handler by lazy { Handler(Looper.getMainLooper()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        presenter = restorePresenter()
-        presenter?.onAttach(this)
+        viewModel = restoreViewModel()
 
         binding.signInButton.setOnClickListener {
-            presenter?.onLogin(
+            viewModel?.onLogin(
                 binding.loginEditText.text.toString(),
                 binding.passwordEditText.text.toString())
         }
 
-        binding.tvForgotPassword.setOnClickListener {
+        binding.forgotPasswordTextView.setOnClickListener {
             val intent = Intent(this, ForgotPasswordActivity::class.java)
             startActivity(intent)
         }
 
-        binding.tvSignUp.setOnClickListener {
+        binding.signUpTextView.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
         }
+
+        viewModel?.showProgress?.subscribe(handler) {
+            if (it == true) {
+                showProgress()
+            } else {
+                hideProgress()
+            }
+        }
+
+        viewModel?.isSignInSuccess?.subscribe(handler) {
+            if (it == true) {
+                setSignInSuccess()
+            }
+        }
+
+        viewModel?.errorCode?.subscribe(handler){
+            setError(it!!)
+        }
     }
 
-    private fun restorePresenter(): LoginPresenter {
-        val presenter = lastCustomNonConfigurationInstance as? LoginPresenter
-        return presenter ?: LoginPresenter(app.loginUseCase)
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel?.isSignInSuccess?.unsubscribeAll()
+        viewModel?.showProgress?.unsubscribeAll()
+        viewModel?.errorCode?.unsubscribeAll()
     }
 
+    private fun restoreViewModel(): LoginViewModel {
+        val viewModel = lastCustomNonConfigurationInstance as? LoginViewModel
+        return viewModel ?: LoginViewModel(app.loginUseCase)
+    }
+
+    @Deprecated("Deprecated in Java")
     override fun onRetainCustomNonConfigurationInstance(): Any? {
-        return presenter
+        return viewModel
     }
 
-    override fun setSignInSuccess() {
+    private fun setSignInSuccess() {
         val intent = Intent(this, AccountActivity::class.java)
         startActivity(intent)
         finish()
     }
 
-    override fun setRestorePasswordSuccess() {
-        this.showDialog(getString(R.string.dialog_restore_password_success_title), getString(R.string.dialog_restore_password_success_text))
-    }
-
-    override fun setSignUpSuccess() {
-        this.showDialog(getString(R.string.dialog_sign_up_success_title), getString(R.string.dialog_sign_up_success_text))
-    }
-
-    override fun setError(errorNumber: Int) {
+    private fun setError(errorNumber: Int) {
         when(errorNumber){
             ERROR_SIGN_IN -> showDialog(getString(R.string.dialog_sign_in_error_title), getString(R.string.dialog_sign_in_error_text))
             ERROR_EMPTY_FIELD -> showDialog(getString(R.string.dialog_empty_field_error_title), getString(R.string.dialog_empty_field_error_text))
@@ -76,14 +99,14 @@ class MainActivity : AppCompatActivity(), LoginContract.View {
         }
     }
 
-    override fun showProgress() {
+    private fun showProgress() {
         binding.progressBar.visibility = View.VISIBLE
         binding.signInButton.isEnabled = false
         setAlpha(0.1f)
         hideKeyboard(this)
     }
 
-    override fun hideProgress() {
+    private fun hideProgress() {
         binding.progressBar.visibility = View.GONE
         binding.signInButton.isEnabled = true
         setAlpha(1f)
@@ -93,8 +116,8 @@ class MainActivity : AppCompatActivity(), LoginContract.View {
         with(binding){
             loginEditText.alpha = alpha
             passwordEditText.alpha = alpha
-            tvForgotPassword.alpha = alpha
-            tvSignUp.alpha = alpha
+            forgotPasswordTextView.alpha = alpha
+            signUpTextView.alpha = alpha
             signInButton.alpha = alpha
         }
     }
@@ -112,7 +135,7 @@ class MainActivity : AppCompatActivity(), LoginContract.View {
     }
 
     private fun showDialog(title: String, message: String) {
-        this?.let {
+        this.let {
             AlertDialog.Builder(it)
                 .setTitle(title)
                 .setMessage(message)

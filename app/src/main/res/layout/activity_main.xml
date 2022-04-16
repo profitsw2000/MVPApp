@@ -45,7 +45,7 @@
         />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tv_forgot_password"
+        android:id="@+id/forgot_password_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/main_screen_top_margin"
@@ -57,13 +57,13 @@
         />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tv_sign_up"
+        android:id="@+id/sign_up_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/ext_login_buttons_text_size"
         android:layout_marginTop="@dimen/main_screen_top_margin"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_forgot_password"
+        app:layout_constraintTop_toBottomOf="@+id/forgot_password_text_view"
         android:textColor="@color/yellow_800"
         android:text="@string/sign_up_text"
         />
@@ -73,8 +73,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:visibility="visible"
-        app:constraint_referenced_ids="login_edit_text, password_edit_text, sign_in_button, tv_forgot_password,
-                                        tv_sign_up"/>
+        app:constraint_referenced_ids="login_edit_text, password_edit_text, sign_in_button, forgot_password_text_view,
+                                        sign_up_text_view"/>
 
     <ProgressBar
         android:id="@+id/progress_bar"
