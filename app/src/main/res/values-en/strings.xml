@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MVPApp</string>
+    <string name="login_hint_text">Login</string>
+    <string name="password_hint_text">Password</string>
+    <string name="forgot_password_text"><u>Forgot password?</u></string>
+    <string name="sign_in_text">Sign In</string>
+    <string name="sign_up_text"><u>Sign Up</u></string>
+    <string name="login_successful_text">Signed In successfully!</string>
+    <string name="dialog_button_ok_text">OK</string>
+    <string name="dialog_restore_password_success_title">Password restore</string>
+    <string name="dialog_restore_password_success_text">Your password was sent to your e-mail.</string>
+    <string name="dialog_sign_up_success_title">Signing Up</string>
+    <string name="dialog_sign_up_success_text">Sign Up successfully.</string>
+    <string name="dialog_sign_in_error_title">Sign In error</string>
+    <string name="dialog_sign_in_error_text">Wrong login/password</string>
+    <string name="dialog_restore_password_error_title">Password recovery error</string>
+    <string name="dialog_restore_password_error_text">User is not found</string>
+    <string name="dialog_registration_error_title">Signing Up error</string>
+    <string name="dialog_registration_error_text">User already exists.</string>
+    <string name="dialog_empty_field_error_title">Input error</string>
+    <string name="dialog_empty_field_error_text">Empty fields detected.</string>
+    <string name="e_mail_hint_text">E-mail</string>
+    <string name="sign_up_button_text">Sign Up</string>
+    <string name="tv_sign_up_success">Sign Up successfully!</string>
+    <string name="restore_password_button_text">Restore password</string>
+</resources>
