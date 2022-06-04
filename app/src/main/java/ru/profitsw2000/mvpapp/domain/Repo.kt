@@ -14,5 +14,5 @@ interface Repo {
 
     // Delete
     fun deleteUser(id: String)
-    fun deleteAll()
+    //fun deleteAll()
 }
