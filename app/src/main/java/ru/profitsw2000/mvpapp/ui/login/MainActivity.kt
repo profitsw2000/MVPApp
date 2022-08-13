@@ -19,7 +19,9 @@ private const val ERROR_EMPTY_FIELD = 4
 
 class MainActivity : AppCompatActivity(), LoginContract.View {
     private lateinit var binding: ActivityMainBinding
-    private var presenter: LoginContract.Presenter? = null
+    var presenter: LoginContract.Presenter? = null
+        private set
+    val testNumber = 5
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
