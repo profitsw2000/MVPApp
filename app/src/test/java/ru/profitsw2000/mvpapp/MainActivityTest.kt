@@ -108,22 +108,6 @@ class MainActivityTest {
         }
     }
 
-    //совместный тест кнопки, loginEditText и passwordEditText
-/*    @Test
-    fun signInButton_isWorking() {
-        scenario.onActivity {
-            val button = it.findViewById<Button>(R.id.sign_in_button)
-            val loginEditText = it.findViewById<EditText>(R.id.login_edit_text)
-            val passwordEditText = it.findViewById<EditText>(R.id.password_edit_text)
-            val presenter = spy(it.presenter)
-            loginEditText.setText("login", TextView.BufferType.EDITABLE)
-            passwordEditText.setText("password", TextView.BufferType.EDITABLE)
-            it.presenter?.onLogin("login","password")
-            button.performClick()
-            verify(presenter, times(1))?.onLogin("login","password")
-        }
-    }*/
-
     //проверка ForgotPassword TextView
     @Test
     fun forgotPasswordTextView_NotNull() {
