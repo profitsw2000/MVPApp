@@ -5,10 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/main_constraint_padding"
-    tools:context=".ui.login.MainActivity">
+    tools:context=".ui.screens.SignUpActivity">
 
     <EditText
-        android:id="@+id/login_edit_text"
+        android:id="@+id/sign_up_screen_email_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/e_mail_hint_text"
+        android:singleLine="true"
+        android:layout_marginTop="@dimen/main_screen_top_margin"
+        android:textColorHint="@color/yellow_600"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <EditText
+        android:id="@+id/sign_up_screen_login_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/login_hint_text"
@@ -17,11 +29,10 @@
         android:textColorHint="@color/yellow_600"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/password_edit_text"/>
+        app:layout_constraintTop_toBottomOf="@+id/sign_up_screen_email_edit_text" />
 
     <EditText
-        android:id="@+id/password_edit_text"
+        android:id="@+id/sign_up_screen_password_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/password_hint_text"
@@ -30,57 +41,49 @@
         android:textColorHint="@color/yellow_600"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_edit_text" />
+        app:layout_constraintTop_toBottomOf="@+id/sign_up_screen_login_edit_text"/>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/sign_in_button"
+        android:id="@+id/sign_up_screen_sign_up_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/main_screen_top_margin"
-        android:text="@string/sign_in_text"
+        android:text="@string/sign_up_button_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password_edit_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sign_up_screen_password_edit_text"
         android:backgroundTint="@color/yellow_800"
         android:textStyle="bold"
         />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tv_forgot_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/main_screen_top_margin"
-        android:textSize="@dimen/ext_login_buttons_text_size"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password_edit_text"
-        android:textColor="@color/yellow_800"
-        android:text="@string/forgot_password_text"
-        />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tv_sign_up"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/ext_login_buttons_text_size"
-        android:layout_marginTop="@dimen/main_screen_top_margin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_forgot_password"
-        android:textColor="@color/yellow_800"
-        android:text="@string/sign_up_text"
-        />
-
     <androidx.constraintlayout.widget.Group
-        android:id="@+id/mainGroup"
+        android:id="@+id/sign_up_screen_main_group"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:visibility="visible"
-        app:constraint_referenced_ids="login_edit_text, password_edit_text, sign_in_button, tv_forgot_password,
-                                        tv_sign_up"/>
+        app:constraint_referenced_ids="sign_up_screen_email_edit_text, sign_up_screen_login_edit_text,
+        sign_up_screen_password_edit_text, sign_up_screen_sign_up_button"
+        tools:layout_editor_absoluteX="20dp"
+        tools:layout_editor_absoluteY="20dp"
+        tools:visibility="visible" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_sign_up_succesful"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tv_sign_up_success"
+        android:textSize="@dimen/login_successful_text_size"
+        android:textColor="@color/black"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -1,3 +1,26 @@
 <resources>
     <string name="app_name">MVPApp</string>
+    <string name="login_hint_text">Логин</string>
+    <string name="password_hint_text">Пароль</string>
+    <string name="forgot_password_text">Забыли пароль?</string>
+    <string name="sign_in_text">Войти</string>
+    <string name="sign_up_text">Зарегистрироваться</string>
+    <string name="login_successful_text">Вход выполнен!</string>
+    <string name="dialog_button_ok_text">OK</string>
+    <string name="dialog_restore_password_success_title">Восстановление пароля</string>
+    <string name="dialog_restore_password_success_text">Пароль был выслан на электронный адрес.</string>
+    <string name="dialog_sign_up_success_title">Регистрация</string>
+    <string name="dialog_sign_up_success_text">Регистрация пользователя выполнена успешно.</string>
+    <string name="dialog_sign_in_error_title">Ошибка входа</string>
+    <string name="dialog_sign_in_error_text">Неверный логин/пароль</string>
+    <string name="dialog_restore_password_error_title">Ошибка восстановления пароля</string>
+    <string name="dialog_restore_password_error_text">Пользователь не найден</string>
+    <string name="dialog_registration_error_title">Ошибка регистрации</string>
+    <string name="dialog_registration_error_text">Пользователь уже существует.</string>
+    <string name="dialog_empty_field_error_title">Ошибка ввода</string>
+    <string name="dialog_empty_field_error_text">Обнаружены пустые поля.</string>
+    <string name="e_mail_hint_text">Эл. почта</string>
+    <string name="sign_up_button_text">Зарегистрироваться</string>
+    <string name="tv_sign_up_success">Регистрация завершена успешно!</string>
+    <string name="restore_password_button_text">Восстановить пароль</string>
 </resources>
