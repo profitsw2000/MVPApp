@@ -89,6 +89,18 @@ class MainActivityEspressoTest {
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
     }
 
+    @Test
+    fun buttonSignIn_IsEffectiveVisible() {
+        Espresso.onView(withId(R.id.sign_in_button))
+            .check(ViewAssertions.matches(ViewMatchers.withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)))
+    }
+
+    @Test
+    fun progressBar_IsNotVisible(){
+        Espresso.onView(withId(R.id.progress_bar))
+            .check(ViewAssertions.matches(ViewMatchers.withEffectiveVisibility(ViewMatchers.Visibility.GONE)))
+    }
+
     @After
     fun close() {
         scenario.close()
