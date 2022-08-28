@@ -76,7 +76,8 @@ class MainActivityEspressoTest {
 
     @Test
     fun forgotPasswordTextView_HasText() {
-        val assertion = ViewAssertions.matches(ViewMatchers.withText(R.string.forgot_password_text))
+        val text = "Forgot password?"
+        val assertion = ViewAssertions.matches(ViewMatchers.withText(text))
         Espresso.onView(withId(R.id.tv_forgot_password)).check(assertion)
     }
 
@@ -96,7 +97,8 @@ class MainActivityEspressoTest {
 
     @Test
     fun signUpTextView_HasText() {
-        val assertion = ViewAssertions.matches(ViewMatchers.withText(R.string.sign_up_text))
+        val text = "Sign Up"
+        val assertion = ViewAssertions.matches(ViewMatchers.withText(text))
         Espresso.onView(withId(R.id.tv_sign_up)).check(assertion)
     }
 
@@ -110,6 +112,13 @@ class MainActivityEspressoTest {
     fun buttonSignIn_IsEffectiveVisible() {
         Espresso.onView(withId(R.id.sign_in_button))
             .check(ViewAssertions.matches(ViewMatchers.withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)))
+    }
+
+    @Test
+    fun buttonSignIn_hasText() {
+        val buttonText = "Sign In"
+        Espresso.onView(withId(R.id.sign_in_button))
+            .check(ViewAssertions.matches(ViewMatchers.withText(buttonText)))
     }
 
     @Test

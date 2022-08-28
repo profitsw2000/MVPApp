@@ -108,6 +108,15 @@ class MainActivityTest {
         }
     }
 
+    @Test
+    fun signInButtonText_isRight() {
+        scenario.onActivity {
+            val buttonText = "Sign In"
+            val button = it.findViewById<Button>(R.id.sign_in_button)
+            Assert.assertEquals(buttonText, button.text.toString())
+        }
+    }
+
     //проверка ForgotPassword TextView
     @Test
     fun forgotPasswordTextView_NotNull() {
@@ -120,8 +129,9 @@ class MainActivityTest {
     @Test
     fun forgotPasswordTextView_HasText() {
         scenario.onActivity {
+            val text = "Forgot password?"
             val forgotPasswordTextView = it.findViewById<TextView>(R.id.tv_forgot_password)
-            TestCase.assertEquals("Forgot password?", forgotPasswordTextView.text)
+            TestCase.assertEquals(text, forgotPasswordTextView.text)
         }
     }
 
@@ -144,9 +154,10 @@ class MainActivityTest {
 
     @Test
     fun signUpTextView_HasText() {
+        val text = "Sign Up"
         scenario.onActivity {
             val signUpTextView = it.findViewById<TextView>(R.id.tv_sign_up)
-            TestCase.assertEquals("Sign Up", signUpTextView.text)
+            TestCase.assertEquals(text, signUpTextView.text)
         }
     }
 
